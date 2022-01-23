@@ -87,6 +87,49 @@ housing_df.isnull().sum()
 ```
 housing_df.style.highlight_null('yellow')
 ```
+```
+housing_df[['INDUS', 'NOX', 'DIS', 'PTRATIO']].values[4][0]
+```
+```
+housing_df[['INDUS', 'NOX', 'DIS', 'PTRATIO']].values[5][0]
+```
+```
+type(housing_df[['INDUS', 'NOX', 'DIS', 'PTRATIO']].values[4][0])
+```
+```
+type(housing_df[['INDUS', 'NOX', 'DIS', 'PTRATIO']].values[5][0])
+```
+
+### Highlight both Missing Data and NaN
+
+The above code line is not efficient to highlight both Missing values and NaN values, but only NaN in Yellow. So we wrote a function to highlight Missing values in Dark Orange and NaN values in Yellow.
+
+As we could see above that the columns of 'INDUS', 'NOX', 'DIS', 'PTRATIO' should have had 3 types: string, float and nan instead of only string as exemplified earlier. We would use while loop to try cast the cell value with float type. If error happens, that cell will be highlighted in dark orange. Another if condition will detect NaN values for each cell. If true, it will be highlighted in yellow. Otherwise, the normal data values will be kept as usual.
+
+```
+import math
+def highlight_missing_and_nan(cell_value):
+
+    highlight_missing_values = 'background-color: darkorange;'
+    highlight_nan = 'background-color: yellow;'
+    default = ''
+    
+    while True:
+        try:
+            cell_value = float(cell_value)
+            break
+        except ValueError:
+            return highlight_missing_values    
+    if math.isnan(cell_value) == True:
+        return highlight_nan
+    return default
+
+housing_df.style.applymap(highlight_missing_and_nan)
+#housing_df[['INDUS', 'NOX', 'DIS', 'PTRATIO']].style.applymap(highlight_missing_and_nan)
+```
+
+
+
 ## Part B: Handling the columns with missing data (NaN and string in numerical columns)
 
 3 columns: INDUS, NOX, DIS have missing values and NaN. I will handle each column.
