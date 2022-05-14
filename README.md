@@ -152,7 +152,7 @@ print(housing_df)
 #### Replace missing values with NaN for the column INDUS
 
 ```
-
+housing_df['INDUS'].unique().tolist()
 ```
 I detected that the column INDUS got missing values including: nana, "****", "*****", "Sara". I will leave the exisiting NaN values there and replace these mentioned 3 strings into NaN values.
 
